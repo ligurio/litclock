@@ -1,0 +1,77 @@
+html, body {
+    margin: 0; padding: 0;
+    height: 100%;
+    overflow: auto;
+
+}
+
+/*
+#lit_quote {
+
+}
+*/
+#lit_quote em {
+    font-weight: 900;
+    color: rgb(19, 19, 19);
+    font-style: normal
+}
+
+
+#main_text {
+    width: 80vw;
+    margin: auto;
+    color: dimgrey;
+    font-family: 'Merriweather', Times, serif;
+}
+
+cite {
+    float: right;
+    padding-left: 10vw;
+    font-size: 2.3vw;
+}
+cite #book{
+    font-style: normal;
+}
+
+#buttom {
+    height: 10px;
+    width: 90%;
+    position: fixed;
+    bottom:2%;
+    color: dimgray;
+    padding-left: 40px;
+    padding-right: 0px;
+
+}
+#buttom a, a:visited {
+    color: rgb(66, 66, 66)
+}
+
+#github {
+    display: inline;
+    padding-right: 5px;
+}
+
+#buttom span {
+    padding-left: 5px;
+    border-left-style: solid;
+    border-left-width: 2px;
+    border-left-color: dimgray;
+}
+
+/* dark theme */
+body.dark {
+    background: #181A1B;
+}
+
+body.dark #lit_quote em {
+    color: rgb(220, 217, 212);
+}
+
+body.dark #main_text, body.dark #buttom {
+    color: rgb(166, 158, 146);
+}
+
+body.dark #buttom a, a:visited {
+    color: rgb(190, 185, 176);
+}
