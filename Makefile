@@ -8,9 +8,9 @@ ANNOTATED := $(PROJECT_DIR)/quotes.csv
 TARGET_DIR ?= static/times/
 JSON_DATA = ${TARGET_DIR}/*.json
 
-all: gen
+all: build
 
-gen: ${ANNOTATED}
+build: ${ANNOTATED}
 	@python build.py --filename ${ANNOTATED} --path ${TARGET_DIR}
 
 check: ${ANNOTATED}
@@ -22,4 +22,4 @@ www:
 clean:
 	@rm -f ${JSON_DATA}
 
-.PHONY: gen check www clean
+.PHONY: build check www clean
