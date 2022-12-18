@@ -52,7 +52,7 @@ def write_files(times, path):
             json_obj = json.dumps(times[time], indent = 4)
             outfile.write(json_obj)
 
-DEFAULT_ANNNOTATED_DATA = "litclock_annotated.csv"
+DEFAULT_ANNNOTATED_DATA = "quotes.csv"
 DEFAULT_JSON_PATH = "static/times"
 
 csv_fields = ["time", "quote_time_case", "quote", "title", "author", "sfw"]

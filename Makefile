@@ -4,7 +4,7 @@
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 PROJECT_DIR := $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))
 
-ANNOTATED := $(PROJECT_DIR)/litclock_annotated.csv
+ANNOTATED := $(PROJECT_DIR)/quotes.csv
 TARGET_DIR ?= static/times/
 JSON_DATA = ${TARGET_DIR}/*.json
 
