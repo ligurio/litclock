@@ -11,10 +11,10 @@ JSON_DATA = ${TARGET_DIR}/*.json
 all: gen
 
 gen: ${ANNOTATED}
-	@python csv_to_json.py --filename ${ANNOTATED} --path ${TARGET_DIR}
+	@python build.py --filename ${ANNOTATED} --path ${TARGET_DIR}
 
 check: ${ANNOTATED}
-	@python csv_to_json.py --filename ${ANNOTATED} --path ${TARGET_DIR} --dry-run --verbose
+	@python build.py --filename ${ANNOTATED} --path ${TARGET_DIR} --dry-run --verbose
 
 www:
 	@python -m http.server 8000 --bind 127.0.0.1
