@@ -1,6 +1,6 @@
-# literature-clock-russian
+# literature clock
 
-Clock using time quotes from the russian literature.
+Clock using time quotes from a literature.
 
 The working site is in the `static/` folder, and can be visited at
 https://bronevichok.ru/clock/. To run it locally you may need to serve `static/`
