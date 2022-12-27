@@ -22,7 +22,7 @@
 
             if (sfw) {
                 try {
-                    document.getElementById('sfw_toggle').innerHTML = '<a href="/">Include all quotes</a>';
+                    document.getElementById('sfw_toggle').innerHTML = '<a href="./">NSFW</a>';
                 } catch (e) {
                     console.log(e);
                 }
@@ -139,7 +139,7 @@
     <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet'>
     <script src="theme.js"></script>
 
-    <title>Literature Clock</title>
+    <title>Литературные часы / Literature Clock</title>
 
 </head>
 
@@ -158,18 +158,20 @@
 
     <div id="buttom">
         <div id="github">
-            <a href="https://github.com/ligurio/literature-clock-russian">GitHub</a>
+            <a href="https://github.com/ligurio/litclock/issues/new">Add new quote</a>
         </div>
+        <!--
         <span id="based_on">
             Based on work and idea by
             <a href="http://www.eerlijkemedia.nl/">Jaap Meijers</a> and
             <a href="http://litclock.mohawkhq.com/">The Guardian</a>
         </span>
-        <span id="twitter">
-            By <a href="https://twitter.com/JohsEnevoldsen">@JohsEnevoldsen</a>
+        -->
+        <span id="website">
+            Made by <a href="https://bronevichok.ru/">Sergey Bronnikov</a>
         </span>
         <span id="sfw_toggle">
-            <a href="?sfw=yes">Skip quotes marked NSFW</a>
+            <a href="?sfw=yes">SFW</a>
         </span>
         <span>
             <a id="toggle-theme" onclick="toggle_theme()" href="#">Dark Theme</a>
