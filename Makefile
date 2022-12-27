@@ -17,12 +17,12 @@ LITCLOCK_MAN = litclock.1
 all: build
 
 build: ${ANNOTATED}
-	@python build.py --filename ${ANNOTATED} --path ${TARGET_DIR}
+	@python build.py --filename $< --path ${TARGET_DIR}
 
 check: check-data check-man
 
 check-data: ${ANNOTATED}
-	@python build.py --filename ${ANNOTATED} --path ${TARGET_DIR} --dry-run --verbose
+	@python build.py --filename $< --path ${TARGET_DIR} --dry-run --verbose
 
 check-man: ${LITCLOCK_MAN}
 	@mandoc -Tlint $< -W style
