@@ -1,0 +1,82 @@
+#!/bin/sh
+
+#
+# litclock 0.1.0
+# Copyright (c) 2022, Sergey Bronnikov
+# https://github.com/ligurio/litclock
+#
+# Created: 2013-08-29
+# Last Updated: 2021-09-14
+#
+# litclock script is released under the BSD 2-Clause license.
+# See LICENSE file for details.
+#
+# SPDX-License-Identifier: BSD-2-Clause
+#
+
+set -eu
+
+DEFAULT_QUOTES="quotes.csv"
+DELIM="|"
+DEFAULT_COLOR="\033[0;31m"
+DISABLE_COLOR="\e[0m"
+
+quotes_file="$DEFAULT_QUOTES"
+ctime=""
+
+usage() {
+	echo "Usage: $0 [-p <path>] [-t <time>] [-v]" 1>&2; exit 1;
+}
+
+while getopts ":p:t:v" o; do
+    case "${o}" in
+        p) quotes_file=${OPTARG} ;;
+        t) ctime=${OPTARG} ;;
+		v) printf "litclock 0.1.0\n" && exit 0 ;;
+        *) usage ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if ! [ -f "$quotes_file" ]; then
+	echo "File $quotes_file is not found."
+	exit 1
+fi
+
+if [ -z "${ctime}" ]; then
+	ctime=$(date +"%H:%M")
+fi
+
+no_quote=1
+
+exec < $quotes_file
+while read -r line
+do
+	time=$(echo "$line" | cut -d $DELIM -f1)
+	if [ "$ctime" != "$time" ]; then
+		continue
+	fi
+	no_quote=""
+	quote_time_case=$(echo "$line" | cut -d $DELIM -f2)
+	quote=$(echo "$line" | cut -d $DELIM -f3)
+	title=$(echo "$line" | cut -d $DELIM -f4)
+	author=$(echo "$line" | cut -d $DELIM -f5)
+
+	quote_last=${quote#*"$quote_time_case"}
+	quote_first=${quote%%"$quote_time_case"*}
+
+	printf "\""
+	printf "%s" "$quote_first"
+	printf "$DEFAULT_COLOR"
+	printf "%s" "$quote_time_case"
+	printf "$DISABLE_COLOR"
+	printf "%s" "$quote_last"
+	printf "\"\n"
+	printf " -- '%s', %s\n\n" "$title" "$author"
+
+	break
+done
+
+! [ -z "$no_quote" ] && printf "No quote. Time is %s.\n" "$ctime"
+
+exit 0
