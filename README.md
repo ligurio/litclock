@@ -6,6 +6,10 @@ Clock using time quotes from a literature.
 
 There is a shell script `litclock` that shows a quote for a current time:
 
+> $ date
+>
+> Tue Dec 27 09:45:57 AM MSK 2022
+>
 > $ litclock
 >
 > "Первое, что бросилось нам в глаза, когда мы вошли в комнату Николауса,
