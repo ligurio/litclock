@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 #
 
-set -eu
+set -eu -o pipefail
 
 DEFAULT_QUOTES="quotes/quotes_ru.csv"
 DELIM="|"
