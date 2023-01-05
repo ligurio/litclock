@@ -23,3 +23,8 @@ The working site is in the `static/` folder, and can be visited at
 https://bronevichok.ru/clock/. To run it locally you may need to serve `static/`
 with an HTTP server (e.g. `python3 -m http.server`) ... or just open
 `static/index.html` in a web browser.
+
+## License
+
+- English version: CC BY-NC-SA 2.5, [Johannes Enevoldsen](https://jenevoldsen.com/)
+- Russian version: CC BY-NC-SA 2.5, [Sergey Bronnikov](https://bronevichok.ru/)
