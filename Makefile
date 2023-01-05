@@ -7,7 +7,7 @@ PROJECT_DIR := $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))
 PREFIX ?= /usr
 PREFIX_MAN = ${PREFIX}/share/man
 
-ANNOTATED := $(PROJECT_DIR)/quotes/quotes_ru.csv
+QUOTES ?= $(PROJECT_DIR)/quotes/quotes_ru.csv
 TARGET_DIR ?= static/times/
 JSON_DATA = ${TARGET_DIR}/*.json
 
@@ -16,12 +16,12 @@ LITCLOCK_MAN = litclock.1
 
 all: build
 
-build: ${ANNOTATED}
+build: ${QUOTES}
 	@python build.py --filename $< --path ${TARGET_DIR}
 
 check: check-data check-man
 
-check-data: ${ANNOTATED}
+check-data: ${QUOTES}
 	@python build.py --filename $< --path ${TARGET_DIR} --dry-run --verbose
 
 check-man: ${LITCLOCK_MAN}
