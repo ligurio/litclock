@@ -7,7 +7,7 @@ PROJECT_DIR := $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))
 PREFIX ?= /usr
 PREFIX_MAN = ${PREFIX}/share/man
 
-ANNOTATED := $(PROJECT_DIR)/quotes.csv
+ANNOTATED := $(PROJECT_DIR)/quotes/quotes_ru.csv
 TARGET_DIR ?= static/times/
 JSON_DATA = ${TARGET_DIR}/*.json
 
