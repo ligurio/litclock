@@ -6,7 +6,17 @@ change log follows the conventions of
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/ligurio/litclock/compare/9936c762...HEAD
+[Unreleased]: https://github.com/ligurio/litclock/compare/0.1.0...HEAD
+
+### Added
+
+### Fixed
+
+### Changed
+
+## [0.1.0]
+
+[0.1.0]: https://github.com/ligurio/litclock/compare/9936c762...0.1.0
 
 ### Added
 
@@ -14,7 +24,3 @@ change log follows the conventions of
 - Manual page for a shell script.
 - Shell script for displaying clock in a terminal.
 - Russian quotes.
-
-### Fixed
-
-### Changed
