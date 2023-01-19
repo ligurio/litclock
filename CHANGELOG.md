@@ -14,6 +14,7 @@ change log follows the conventions of
 
 ### Changed
 
+- Makefile installs files with quotes.
 - Format build script according to Python PEP8 style.
 - Check Python PEP8 style in GH Actions.
 
