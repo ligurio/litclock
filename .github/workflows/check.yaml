@@ -16,6 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: sudo apt install -y mandoc
+      - run: sudo apt install -y mandoc python3-autopep8
 
       - run: make check

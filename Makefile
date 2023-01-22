@@ -19,13 +19,16 @@ all: build
 build: ${QUOTES}
 	@python build.py --filename $< --path ${TARGET_DIR}
 
-check: check-data check-man
+check: check-data check-man check-pep8
 
 check-data: ${QUOTES}
 	@python build.py --filename $< --path ${TARGET_DIR} --dry-run --verbose
 
 check-man: ${LITCLOCK_MAN}
 	@mandoc -Tlint $< -W style
+
+check-pep8: build.py
+	@autopep8 --diff $<
 
 www:
 	@python -m http.server 8000 --bind 127.0.0.1
@@ -37,4 +40,4 @@ install: ${LITCLOCK_SCRIPT} ${LITCLOCK_MAN}
 clean:
 	@rm -f ${JSON_DATA}
 
-.PHONY: build check check-data check-man install www clean
+.PHONY: build check check-data check-man check-pep8 install www clean

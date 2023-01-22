@@ -15,6 +15,7 @@ change log follows the conventions of
 ### Changed
 
 - Format build script according to Python PEP8 style.
+- Check Python PEP8 style in GH Actions.
 
 ## [0.1.0]
 
