@@ -22,7 +22,7 @@ build: ${QUOTES}
 check: check-data check-man check-pep8
 
 check-data: ${QUOTES}
-	@python build.py --filename $< --path ${TARGET_DIR} --dry-run --verbose
+	@python build.py --filename $< --dry-run
 
 check-man: ${LITCLOCK_MAN}
 	@mandoc -Tlint $< -W style
