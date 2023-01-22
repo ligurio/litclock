@@ -14,6 +14,8 @@ change log follows the conventions of
 
 ### Changed
 
+- Format build script according to Python PEP8 style.
+
 ## [0.1.0]
 
 [0.1.0]: https://github.com/ligurio/litclock/compare/9936c762...0.1.0
