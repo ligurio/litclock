@@ -56,7 +56,7 @@ def write_files(times, path):
             outfile.write(json_obj)
 
 
-DEFAULT_ANNNOTATED_DATA = "quotes.csv"
+DEFAULT_ANNNOTATED_DATA = "quotes/quotes_ru.csv"
 DEFAULT_JSON_PATH = "static/times"
 
 csv_fields = ["time", "quote_time_case", "quote", "title", "author", "sfw"]
