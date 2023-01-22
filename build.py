@@ -18,6 +18,7 @@ import sys
 ]
 """
 
+
 def split_string(quote, quote_time_case):
     start_pos = quote.find(quote_time_case)
     if start_pos == -1:
@@ -27,6 +28,7 @@ def split_string(quote, quote_time_case):
     quote_first = quote[0:start_pos]
     quote_last = quote[end_pos:len(quote)]
     return quote_first, quote_last
+
 
 def build_record(row):
     record = {}
@@ -41,6 +43,7 @@ def build_record(row):
         record["sfw"] = "yes"
     return record
 
+
 def write_files(times, path):
     for time in times.keys():
         time_wo_colon = time.replace(":", "_", 1)
@@ -49,8 +52,9 @@ def write_files(times, path):
             file_name = os.path.join(path, file_name)
         print(file_name)
         with open(file_name, "w") as outfile:
-            json_obj = json.dumps(times[time], indent = 4)
+            json_obj = json.dumps(times[time], indent=4)
             outfile.write(json_obj)
+
 
 DEFAULT_ANNNOTATED_DATA = "quotes.csv"
 DEFAULT_JSON_PATH = "static/times"
@@ -58,13 +62,13 @@ DEFAULT_JSON_PATH = "static/times"
 csv_fields = ["time", "quote_time_case", "quote", "title", "author", "sfw"]
 times = {}
 
-parser = argparse.ArgumentParser(prog = "csv_to_json")
+parser = argparse.ArgumentParser(prog="csv_to_json")
 parser.add_argument("--filename",
-					default = DEFAULT_ANNNOTATED_DATA,
-					type=str)
+                    default=DEFAULT_ANNNOTATED_DATA,
+                    type=str)
 parser.add_argument("-p", "--path",
-					default=DEFAULT_JSON_PATH,
-					type=str)
+                    default=DEFAULT_JSON_PATH,
+                    type=str)
 parser.add_argument("-d", "--dry-run",
                     action="store_true")
 parser.add_argument("-v", "--verbose",
@@ -86,4 +90,4 @@ with open(args.filename) as csv_file:
 
 # Write files.
 if not args.dry_run:
-	write_files(times, args.path)
+    write_files(times, args.path)
