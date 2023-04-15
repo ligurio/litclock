@@ -13,7 +13,9 @@
 
 set -eu -o pipefail
 
-DEFAULT_QUOTES="quotes/quotes_ru.csv"
+PREFIX_DATA="/usr/local/share"
+
+DEFAULT_QUOTES="${PREFIX_DATA}/litclock/quotes_ru.csv"
 DELIM="|"
 DEFAULT_COLOR="\033[0;31m"
 DISABLE_COLOR="\e[0m"
