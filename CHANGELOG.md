@@ -14,6 +14,7 @@ change log follows the conventions of
 
 ### Changed
 
+- Sync English quotes.
 - Script searches file with quotes in a system path, not a current directory.
 - Makefile installs files with quotes.
 - Format build script according to Python PEP8 style.
