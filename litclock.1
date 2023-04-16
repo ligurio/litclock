@@ -1,5 +1,5 @@
 .\"
-.\" Copyright (c) 2022, Sergey Bronnikov
+.\" Copyright (c) 2022-2023, Sergey Bronnikov
 .\" All rights reserved.
 .\"
 .\" Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@
 .Nm
 .Op Fl p Ar path
 .Op Fl t Ar time
+.Op Fl l Ar lang
 .Op Fl v
 .Sh DESCRIPTION
 .Nm
@@ -46,6 +47,10 @@ The options are as follows:
 Specify a path to a file with quotes.
 .It Fl t Ar time
 Specify a time a format HH:MM to use instead of current time.
+.It Fl l Ar lang
+Specify a language.
+Possible values are "ru" and "en".
+Default language is "ru".
 .El
 .Sh EXAMPLES
 Display a quote for a current time:
@@ -54,6 +59,10 @@ $ litclock
 .Pp
 "9:05am lay in bed, staring at ceiling"
  -- 'A Fraction of the Whole', Steve Toltz
+.Pp
+$ litclock -l ru -t 23:16
+.Pp
+Счастливые часов не наблюдают. (сейчас 23:16)
 .Sh AUTHORS
 .Nm
 was written by
