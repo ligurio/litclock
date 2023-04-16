@@ -18,4 +18,5 @@ jobs:
 
       - run: sudo apt install -y mandoc python3-autopep8
 
+      - run: sleep 200
       - run: make check
