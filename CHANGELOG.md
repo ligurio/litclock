@@ -10,6 +10,8 @@ change log follows the conventions of
 
 ### Added
 
+- Option for setting language in a script.
+
 ### Fixed
 
 ### Changed
