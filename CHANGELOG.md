@@ -17,6 +17,7 @@ change log follows the conventions of
 - Compatibility with dash(1) by removing  pipefail option in litclock(1).
 - Shellcheck warnings in litclock(1).
 - Slowdown in a script: cut replaced with builtin read.
+- Escape code for disabling color in Korn shell.
 
 ### Changed
 
