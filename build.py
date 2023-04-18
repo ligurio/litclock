@@ -91,3 +91,7 @@ with open(args.filename) as csv_file:
 # Write files.
 if not args.dry_run:
     write_files(times, args.path)
+
+perc_covered = round(len(times)/(60 * 24) * 100)
+print("File with quotes: {}".format(args.filename))
+print("Number of quotes with unique time: {} ({}%)".format(len(times), perc_covered))
