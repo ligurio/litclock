@@ -17,7 +17,7 @@ PREFIX_DATA="/usr/local/share"
 
 DEFAULT_LANG="ru"
 DEFAULT_COLOR="\033[0;31m"
-DISABLE_COLOR="\e[0m"
+DISABLE_COLOR="\033[00m"
 
 lang="${DEFAULT_LANG}"
 ctime=""
