@@ -11,6 +11,7 @@ change log follows the conventions of
 ### Added
 
 - Option for setting language in a script.
+- Message with a number of unique quotes and percents to a build script.
 
 ### Fixed
 
