@@ -14,6 +14,8 @@ change log follows the conventions of
 
 ### Fixed
 
+- Compatibility with dash(1) by removing  pipefail option in litclock(1).
+
 ### Changed
 
 - Sync English quotes.
