@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 #
 # litclock 0.1.0
@@ -16,7 +16,6 @@ set -eu
 PREFIX_DATA="/usr/local/share"
 
 DEFAULT_LANG="ru"
-DELIM="|"
 DEFAULT_COLOR="\033[0;31m"
 DISABLE_COLOR="\e[0m"
 
@@ -51,19 +50,16 @@ fi
 
 no_quote=1
 
+IFS='|'
+
 exec < "$quotes_file"
 while read -r line
 do
-	time=$(echo "$line" | cut -d $DELIM -f1)
+	read -r time quote_time_case quote title author sfw <<< "$line"
 	if [ "$ctime" != "$time" ]; then
 		continue
 	fi
 	no_quote=0
-	quote_time_case=$(echo "$line" | cut -d $DELIM -f2)
-	quote=$(echo "$line" | cut -d $DELIM -f3)
-	title=$(echo "$line" | cut -d $DELIM -f4)
-	author=$(echo "$line" | cut -d $DELIM -f5)
-
 	quote_last=${quote#*"$quote_time_case"}
 	quote_first=${quote%%"$quote_time_case"*}
 
