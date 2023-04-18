@@ -51,7 +51,7 @@ fi
 
 no_quote=1
 
-exec < $quotes_file
+exec < "$quotes_file"
 while read -r line
 do
 	time=$(echo "$line" | cut -d $DELIM -f1)
@@ -69,9 +69,9 @@ do
 
 	printf "\""
 	printf "%s" "$quote_first"
-	printf "$DEFAULT_COLOR"
+	printf "%b" "$DEFAULT_COLOR"
 	printf "%s" "$quote_time_case"
-	printf "$DISABLE_COLOR"
+	printf "%b" "$DISABLE_COLOR"
 	printf "%s" "$quote_last"
 	printf "\"\n"
 	printf " -- '%s', %s\n\n" "$title" "$author"
@@ -80,7 +80,7 @@ do
 done
 
 if [ $no_quote -eq 1 ]; then
-    if [ "X$lang" == "Xru" ]; then
+    if [ "X$lang" = "Xru" ]; then
         printf "Счастливые часов не наблюдают. (сейчас %s)\n" "$ctime"
     else
         printf "No quote. Time is %s.\n" "$ctime"
