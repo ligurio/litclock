@@ -33,7 +33,7 @@ check-pep8: build.py
 	@autopep8 --diff $<
 
 www:
-	@python -m http.server 8000 --bind 127.0.0.1
+	@python -m http.server 8000 --bind 127.0.0.1 -d static
 
 install: ${LITCLOCK_SCRIPT} ${LITCLOCK_MAN} ${QUOTES}
 	@install ${LITCLOCK_SCRIPT} ${PREFIX}/local/bin/${LITCLOCK_SCRIPT}
