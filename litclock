@@ -77,7 +77,7 @@ done
 
 if [ $no_quote -eq 1 ]; then
     if [ "X$lang" = "Xru" ]; then
-        printf "Счастливые часов не наблюдают. (сейчас %s)\n" "$ctime"
+        printf "Счастливые часов не наблюдают. -- 'Горе от ума', А.С. Грибоедов. (сейчас %s)\n" "$ctime"
     else
         printf "No quote. Time is %s.\n" "$ctime"
     fi
