@@ -36,10 +36,10 @@ www:
 	@python -m http.server 8000 --bind 127.0.0.1 -d static
 
 install: ${LITCLOCK_SCRIPT} ${LITCLOCK_MAN} ${QUOTES}
-	@install ${LITCLOCK_SCRIPT} ${PREFIX}/local/bin/${LITCLOCK_SCRIPT}
-	@install ${LITCLOCK_MAN} ${PREFIX_MAN}/man1/${LITCLOCK_MAN}
-	@install -d -m 755 ${PREFIX_DATA}/litclock
-	@install -m 644 ${QUOTES} ${PREFIX_DATA}/litclock
+	install ${LITCLOCK_SCRIPT} ${PREFIX}/local/bin/${LITCLOCK_SCRIPT}
+	install ${LITCLOCK_MAN} ${PREFIX_MAN}/man1/${LITCLOCK_MAN}
+	install -d -m 755 ${PREFIX_DATA}/litclock
+	install -m 644 ${QUOTES} ${PREFIX_DATA}/litclock
 
 clean:
 	@rm -f ${JSON_DATA}
