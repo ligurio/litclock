@@ -31,7 +31,7 @@ while getopts ":p:t:l:v" o; do
         p) quotes_file=${OPTARG} ;;
         t) ctime=${OPTARG} ;;
         l) lang=${OPTARG} ;;
-		v) printf "litclock 0.1.0\n" && exit 0 ;;
+        v) printf "litclock 0.1.0\n" && exit 0 ;;
         *) usage ;;
     esac
 done
