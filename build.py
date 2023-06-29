@@ -83,7 +83,7 @@ with open(args.filename) as csv_file:
     for row in list(csv_reader):
         # Build a dictionary.
         time = row["time"]
-        if times.get(time) == None:
+        if times.get(time) is None:
             times[time] = []
         record = build_record(row)
         if args.verbose:
