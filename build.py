@@ -20,7 +20,9 @@ import sys
 
 
 def split_string(quote, quote_time_case):
-    start_pos = quote.find(quote_time_case)
+    quote_lc = quote.lower()
+    quote_time_case_lc = quote_time_case.lower()
+    start_pos = quote_lc.find(quote_time_case_lc)
     if start_pos == -1:
         print("substr {} is not found".format(quote_time_case))
         sys.exit(1)
