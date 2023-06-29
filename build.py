@@ -24,7 +24,7 @@ def split_string(quote, quote_time_case):
     quote_time_case_lc = quote_time_case.lower()
     start_pos = quote_lc.find(quote_time_case_lc)
     if start_pos == -1:
-        print("substr {} is not found".format(quote_time_case))
+        print("substr '{}' is not found".format(quote_time_case))
         sys.exit(1)
     end_pos = start_pos + len(quote_time_case)
     quote_first = quote[0:start_pos]
