@@ -2,7 +2,14 @@
 
 Clock using time quotes from a literature.
 
-## Console
+## Supported languages
+
+- English, completeness - 99%, (1419 out of 1440 quotes).
+- Russian, completeness - 34%, (495 out of 1440 quotes).
+
+## Usage
+
+### Console
 
 There is a shell script `litclock` that shows a quote for a current time:
 
@@ -17,7 +24,7 @@ There is a shell script `litclock` that shows a quote for a current time:
 > Возможно ли, что ему оставалось так мало жить? Сердце у меня сжалось."
 > -- 'Таинственный незнакомец', Марк Твен
 
-## Web
+### Web
 
 The working site is in the `static/` folder, and can be visited at
 https://bronevichok.ru/clock/. To run it locally you may need to serve `static/`
