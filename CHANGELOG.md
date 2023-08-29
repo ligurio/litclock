@@ -4,9 +4,17 @@ All notable changes to this project will be documented in this file. This
 change log follows the conventions of
 [keepachangelog.com](https://keepachangelog.com/).
 
-## [Unreleased]
+[Unreleased]: https://github.com/ligurio/litclock/compare/0.1.1...HEAD
 
-[Unreleased]: https://github.com/ligurio/litclock/compare/0.1.0...HEAD
+### Added
+
+### Fixed
+
+### Changed
+
+## [0.1.1]
+
+[0.1.1]: https://github.com/ligurio/litclock/compare/0.1.0...0.1.1
 
 ### Added
 
