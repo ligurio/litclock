@@ -2,7 +2,39 @@ import argparse
 import csv
 import json
 import os
+import random
 import sys
+
+DEFAULT_QUOTE_RU = {
+    "quote_first": "Счастливые часов не наблюдают.",
+    "quote_time_case": "",
+    "quote_last": "",
+    "title": "Горе от ума",
+    "author": "А. Грибоедов",
+    "sfw": "yes"
+}
+
+DEFAULT_QUOTE_EN = {
+    "quote_first": "Who knows, in happiness, how time is flying?",
+    "quote_time_case": "",
+    "quote_last": "",
+    "title": "Woe From Wit",
+    "author": "Alexander Griboyedov",
+    "sfw": "yes"
+}
+
+
+def complement_number(num):
+    if num < 10:
+        return "0{}".format(num)
+    return "{}".format(num)
+
+
+def iter_daytime():
+    for hours in range(24):
+        for minutes in range(60):
+            yield (complement_number(hours),
+                   complement_number(minutes))
 
 
 def split_string(quote, quote_time_case):
@@ -32,15 +64,27 @@ def build_record(row):
     return record
 
 
-def write_files(times, path):
-    for time in times.keys():
-        time_wo_colon = time.replace(":", "_", 1)
-        file_name = "{}.json".format(time_wo_colon)
-        if path:
-            file_name = os.path.join(path, file_name)
-        print(file_name)
+def complement_placeholders(times):
+    times_with_placeholders = times.copy()
+    for hours, minutes in iter_daytime():
+        time_str = "{}:{}".format(hours, minutes)
+        quotes_list = times_with_placeholders.get(time_str)
+        if not quotes_list:
+            placeholder = DEFAULT_QUOTE_RU.copy()
+            placeholder["time"] = time_str
+            placeholder["quote_first"] = "{}: {}".format(
+                time_str, placeholder["quote_first"])
+            times_with_placeholders[time_str] = [placeholder]
+
+    return times_with_placeholders
+
+
+def write_files(quotes_dict, path):
+    for time_str, quotes_list in quotes_dict.items():
+        json_obj = json.dumps(quotes_list, indent=4)
+        time_wo_colon = time_str.replace(":", "_", 1)
+        file_name = os.path.join(path, "{}.json".format(time_wo_colon))
         with open(file_name, "w") as outfile:
-            json_obj = json.dumps(times[time], indent=4)
             outfile.write(json_obj)
 
 
@@ -111,9 +155,10 @@ def parse_args():
 def main():
     inputs = parse_args()
     times = build_dict(inputs.filename, inputs.verbose)
+    times_with_placeholders = complement_placeholders(times)
     # Write files.
     if not inputs.dry_run:
-        write_files(times, inputs.path)
+        write_files(times_with_placeholders, inputs.path)
 
     perc_covered = round(len(times)/(60 * 24) * 100)
     print("File with quotes: {}".format(inputs.filename))
