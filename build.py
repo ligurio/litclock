@@ -4,20 +4,6 @@ import json
 import os
 import sys
 
-"""
-[
-  {
-    "time": "00:10",
-    "quote_first": "It was at ",
-    "quote_time_case": "ten minutes past midnight",
-    "quote_last": ". Three police cars, Alsations and a black maria arrive at the farmhouse. The farmer clad only in a jock-strap, refused them entry.",
-    "title": "The Queue",
-    "author": "Jonathan Barrow",
-    "sfw": "yes"
-  }
-]
-"""
-
 
 def split_string(quote, quote_time_case):
     quote_lc = quote.lower()
@@ -61,9 +47,6 @@ def write_files(times, path):
 DEFAULT_ANNNOTATED_DATA = "quotes/quotes_ru.csv"
 DEFAULT_JSON_PATH = "static/times"
 
-csv_fields = ["time", "quote_time_case", "quote", "title", "author", "sfw"]
-times = {}
-
 parser = argparse.ArgumentParser(prog="csv_to_json")
 parser.add_argument("--filename",
                     default=DEFAULT_ANNNOTATED_DATA,
@@ -77,19 +60,56 @@ parser.add_argument("-v", "--verbose",
                     action="store_true")
 args = parser.parse_args()
 
-with open(args.filename) as csv_file:
-    csv_reader = csv.DictReader(csv_file, fieldnames=csv_fields,
-                                delimiter="|", quoting=csv.QUOTE_NONE)
-    for row in list(csv_reader):
-        # Build a dictionary.
-        time = row["time"]
-        if times.get(time) is None:
-            times[time] = []
-        record = build_record(row)
-        if args.verbose:
-            print(record)
-        times[time].append(record)
+"""
+The dictionary format is the following:
 
+[
+  "00:09": [
+    ...
+  ],
+  "00:10": [
+  {
+    "time": "00:10",
+    "quote_first": "",
+    "quote_time_case": "",
+    "quote_last": "",
+    "title": "",
+    "author": "",
+    "sfw": ""
+  },
+  {
+    "time": "00:10",
+    "quote_first": "",
+    "quote_time_case": "",
+    "quote_last": "",
+    "title": "",
+    "author": "",
+    "sfw": ""
+  }]
+  "00:11": [
+    ...
+  ],
+]
+"""
+def build_dict(quote_filename, verbose=False):
+    times = {}
+    csv_fields = ["time", "quote_time_case", "quote", "title", "author", "sfw"]
+    with open(quote_filename) as csv_file:
+        csv_reader = csv.DictReader(csv_file, fieldnames=csv_fields,
+                                    delimiter="|", quoting=csv.QUOTE_NONE)
+        for row in list(csv_reader):
+            # Build a dictionary.
+            time = row["time"]
+            if times.get(time) is None:
+                times[time] = []
+            record = build_record(row)
+            if verbose:
+                print(record)
+            times[time].append(record)
+    return times
+
+
+times = build_dict(args.filename)
 # Write files.
 if not args.dry_run:
     write_files(times, args.path)
