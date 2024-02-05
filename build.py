@@ -44,22 +44,6 @@ def write_files(times, path):
             outfile.write(json_obj)
 
 
-DEFAULT_ANNNOTATED_DATA = "quotes/quotes_ru.csv"
-DEFAULT_JSON_PATH = "static/times"
-
-parser = argparse.ArgumentParser(prog="csv_to_json")
-parser.add_argument("--filename",
-                    default=DEFAULT_ANNNOTATED_DATA,
-                    type=str)
-parser.add_argument("-p", "--path",
-                    default=DEFAULT_JSON_PATH,
-                    type=str)
-parser.add_argument("-d", "--dry-run",
-                    action="store_true")
-parser.add_argument("-v", "--verbose",
-                    action="store_true")
-args = parser.parse_args()
-
 """
 The dictionary format is the following:
 
@@ -109,12 +93,33 @@ def build_dict(quote_filename, verbose=False):
     return times
 
 
-times = build_dict(args.filename)
-# Write files.
-if not args.dry_run:
-    write_files(times, args.path)
+def parse_args():
+    parser = argparse.ArgumentParser(prog="build_data")
+    parser.add_argument("--filename",
+                        type=str,
+                        required=True)
+    parser.add_argument("-p", "--path",
+                        type=str)
+    parser.add_argument("-d", "--dry-run",
+                        action="store_true")
+    parser.add_argument("-v", "--verbose",
+                        action="store_true")
+    args = parser.parse_args()
+    return args
 
-perc_covered = round(len(times)/(60 * 24) * 100)
-print("File with quotes: {}".format(args.filename))
-msg_fmt = "Number of quotes with unique time: {} ({}%)"
-print(msg_fmt.format(len(times), perc_covered))
+
+def main():
+    inputs = parse_args()
+    times = build_dict(inputs.filename, inputs.verbose)
+    # Write files.
+    if not inputs.dry_run:
+        write_files(times, inputs.path)
+
+    perc_covered = round(len(times)/(60 * 24) * 100)
+    print("File with quotes: {}".format(inputs.filename))
+    msg_fmt = "Number of quotes with unique time: {} ({}%)"
+    print(msg_fmt.format(len(times), perc_covered))
+
+
+if __name__ == '__main__':
+    main()
