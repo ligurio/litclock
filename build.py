@@ -7,6 +7,10 @@ import os
 import random
 import sys
 
+from PIL import Image, ImageDraw, ImageFont
+import textwrap
+import cv2
+
 DEFAULT_QUOTE_RU = {
     "quote_first": "Счастливые часов не наблюдают.",
     "quote_time_case": "",
@@ -66,6 +70,31 @@ def build_record(row):
     return record
 
 
+def generate_image(txt_quote, txt_title, txt_author, image_name):
+    bg_color = 'black'
+    text_color = 'white'
+    width = 1024
+    height = 512
+    font_size = 30
+
+    font_path = "/usr/share/fonts/truetype/liberation2/LiberationMono-Regular.ttf"
+    font = ImageFont.truetype(
+        font_path, size=font_size, index=0, encoding='unic')
+
+    img = Image.new('RGB', (width, height), color=bg_color)
+    imgDraw = ImageDraw.Draw(img)
+
+    start_w = 50
+    start_h = 100
+    interligne = 40
+    for line in textwrap.wrap(txt_quote, width=50):
+        imgDraw.text((start_w, start_h), line, font=font, fill=text_color)
+        start_h = start_h + interligne
+    txt = "—  '{}', {}".format(txt_title, txt_author)
+    imgDraw.text((start_w, start_h + 10), txt, font=font, fill=text_color)
+    img.save(image_name)
+
+
 def complement_placeholders(times):
     times_with_placeholders = times.copy()
     for hours, minutes in iter_daytime():
@@ -81,13 +110,23 @@ def complement_placeholders(times):
     return times_with_placeholders
 
 
-def write_files(quotes_dict, path):
+def write_files(quotes_dict, path, image=False):
     for time_str, quotes_list in quotes_dict.items():
         json_obj = json.dumps(quotes_list, indent=4)
         time_wo_colon = time_str.replace(":", "_", 1)
-        file_name = os.path.join(path, "{}.json".format(time_wo_colon))
-        with open(file_name, "w") as outfile:
-            outfile.write(json_obj)
+        if not image:
+            file_name = os.path.join(path, "{}.json".format(time_wo_colon))
+            json_obj = json.dumps(quotes_list, indent=4)
+            with open(file_name, "w") as outfile:
+                outfile.write(json_obj)
+        else:
+            file_name = os.path.join(path, "{}.png".format(time_wo_colon))
+            quote = random.choice(quotes_list)
+            quote_str = quote["quote_first"] + \
+                quote["quote_time_case"] + \
+                quote["quote_last"]
+            generate_image(quote_str, quote["title"],
+                           quote["author"], file_name)
 
 
 """
@@ -121,6 +160,8 @@ The dictionary format is the following:
   ],
 ]
 """
+
+
 def build_dict(quote_filename, verbose=False):
     times = {}
     csv_fields = ["time", "quote_time_case", "quote", "title", "author", "sfw"]
@@ -150,17 +191,45 @@ def parse_args():
                         action="store_true")
     parser.add_argument("-v", "--verbose",
                         action="store_true")
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--create-video', action="store_true")
+    group.add_argument('--create-json', action="store_true")
     args = parser.parse_args()
     return args
+
+
+def build_video(image_dir, video_name):
+    fps = 1 / 60  # 1 minute
+    images = [img for img in sorted(
+        os.listdir(image_dir)) if img.endswith(".png")]
+    frame = cv2.imread(os.path.join(image_dir, images[0]))
+    height, width, layers = frame.shape
+
+    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+    result_file = os.path.join(image_dir, video_name)
+    video = cv2.VideoWriter(filename=result_file, fourcc=fourcc,
+                            fps=fps, frameSize=(width, height))
+
+    for image in images:
+        video.write(cv2.imread(os.path.join(image_dir, image)))
+
+    cv2.destroyAllWindows()
+    video.release()
+    print("File {}.".format(result_file))
 
 
 def main():
     inputs = parse_args()
     times = build_dict(inputs.filename, inputs.verbose)
     times_with_placeholders = complement_placeholders(times)
-    # Write files.
-    if not inputs.dry_run:
+    # Write JSON files.
+    if not inputs.dry_run and inputs.create_json:
         write_files(times_with_placeholders, inputs.path)
+
+    # Write a video file.
+    if not inputs.dry_run and inputs.create_video:
+        write_files(times_with_placeholders, inputs.path, image=True)
+        build_video(inputs.path, "litclock.avi")
 
     perc_covered = round(len(times)/(60 * 24) * 100)
     print("File with quotes: {}".format(inputs.filename))
