@@ -17,8 +17,13 @@ LITCLOCK_MAN = litclock.1
 
 all: build
 
-build: ${QUOTES}
-	@python build.py --filename $< --path ${TARGET_DIR}
+build: build_json build_video
+
+build_json: ${QUOTES}
+	@python build.py --filename $< --create-json --path ${TARGET_DIR}/times
+
+build_video: ${QUOTES}
+	@python build.py --filename $< --create-video --path ${TARGET_DIR}/images
 
 check: check-data check-man check-pep8
 
@@ -32,7 +37,7 @@ check-man: ${LITCLOCK_MAN}
 check-pep8: build.py
 	@autopep8 --diff $<
 
-www: build
+www: build_json
 	@python -m http.server 8000 --bind 127.0.0.1 -d static
 
 install: ${LITCLOCK_SCRIPT} ${LITCLOCK_MAN} ${QUOTES}
@@ -44,4 +49,4 @@ install: ${LITCLOCK_SCRIPT} ${LITCLOCK_MAN} ${QUOTES}
 clean:
 	@rm -f ${JSON_DATA}
 
-.PHONY: build check check-data check-man check-pep8 install www clean
+.PHONY: build build_json build_video check check-data check-man check-pep8 install www clean
