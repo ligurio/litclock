@@ -8,8 +8,7 @@ PREFIX ?= /usr
 PREFIX_MAN = ${PREFIX}/share/man
 PREFIX_DATA = ${PREFIX}/local/share
 
-QUOTES  = $(PROJECT_DIR)/quotes/quotes_ru.csv
-QUOTES += $(PROJECT_DIR)/quotes/quotes_en.csv
+QUOTES ?= $(PROJECT_DIR)/quotes/quotes_en.csv
 TARGET_DIR ?= static/times/
 JSON_DATA = ${TARGET_DIR}/*.json
 
@@ -23,8 +22,9 @@ build: ${QUOTES}
 
 check: check-data check-man check-pep8
 
-check-data: ${QUOTES}
-	@python build.py --filename $< --dry-run
+check-data:
+	@python build.py --filename $(PROJECT_DIR)/quotes/quotes_ru.csv --dry-run --create-json --path ${TARGET_DIR}/times
+	@python build.py --filename $(PROJECT_DIR)/quotes/quotes_en.csv --dry-run --create-json --path ${TARGET_DIR}/times
 
 check-man: ${LITCLOCK_MAN}
 	@mandoc -Tlint $< -W style
