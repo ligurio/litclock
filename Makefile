@@ -35,7 +35,7 @@ check-man: ${LITCLOCK_MAN}
 	@mandoc -Tlint $< -W style
 
 check-pep8: build.py
-	@autopep8 --diff $<
+	@autopep8 --diff --exit-code $<
 
 www: build_json
 	@python -m http.server 8000 --bind 127.0.0.1 -d static
