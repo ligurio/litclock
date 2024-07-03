@@ -8,6 +8,8 @@ change log follows the conventions of
 
 ### Added
 
+- Option for generating video files.
+
 ### Fixed
 
 ### Changed
