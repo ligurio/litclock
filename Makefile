@@ -8,9 +8,13 @@ PREFIX ?= /usr
 PREFIX_MAN = ${PREFIX}/share/man
 PREFIX_DATA = ${PREFIX}/local/share
 
-QUOTES ?= $(PROJECT_DIR)/quotes/quotes_en.csv
-TARGET_DIR ?= static/times/
-JSON_DATA = ${TARGET_DIR}/*.json
+TARGET_DIR ?= static
+JSON_DIR = $(TARGET_DIR)/times
+VIDEO_DIR = $(TARGET_DIR)/video
+
+QUOTES_RU = $(PROJECT_DIR)/quotes/quotes_ru.csv
+QUOTES_EN = $(PROJECT_DIR)/quotes/quotes_en.csv
+QUOTES = ${QUOTES_RU} ${QUOTES_EN}
 
 LITCLOCK_SCRIPT = litclock
 LITCLOCK_MAN = litclock.1
@@ -19,17 +23,31 @@ all: build
 
 build: build_json build_video
 
-build_json: ${QUOTES}
-	@python build.py --filename $< --create-json --path ${TARGET_DIR}/times
+build_json: build_json_ru build_json_en
 
-build_video: ${QUOTES}
-	@python build.py --filename $< --create-video --path ${TARGET_DIR}/images
+build_json_ru: ${QUOTES_RU}
+	@python build.py --filename $< --language ru --create-json --path ${JSON_DIR}/ru
+
+build_json_en: ${QUOTES_EN}
+	@python build.py --filename $< --language en --create-json --path ${JSON_DIR}/en
+
+build_video: build_video_ru build_video_en
+
+build_video_ru: ${QUOTES_RU}
+	@python build.py --filename $< --language ru --create-video --path ${VIDEO_DIR}/ru
+
+build_video_en: ${QUOTES_EN}
+	@python build.py --filename $< --language en --create-video --path ${VIDEO_DIR}/en
 
 check: check-data check-man check-pep8
 
-check-data:
-	@python build.py --filename $(PROJECT_DIR)/quotes/quotes_ru.csv --dry-run --create-json --path ${TARGET_DIR}/times
-	@python build.py --filename $(PROJECT_DIR)/quotes/quotes_en.csv --dry-run --create-json --path ${TARGET_DIR}/times
+check-data: check_data_ru check_data_en
+
+check_data_ru: ${QUOTES_RU}
+	@python build.py --filename $< --language ru --dry-run --create-json
+
+check_data_en: ${QUOTES_EN}
+	@python build.py --filename $< --language en --dry-run --create-json
 
 check-man: ${LITCLOCK_MAN}
 	@mandoc -Tlint $< -W style
@@ -38,7 +56,7 @@ check-pep8: build.py
 	@autopep8 --diff --exit-code $<
 
 www: build_json
-	@python -m http.server 8000 --bind 127.0.0.1 -d static
+	@python -m http.server 8000 --bind 127.0.0.1 -d ${TARGET_DIR}
 
 install: ${LITCLOCK_SCRIPT} ${LITCLOCK_MAN} ${QUOTES}
 	install ${LITCLOCK_SCRIPT} ${PREFIX}/local/bin/${LITCLOCK_SCRIPT}
@@ -47,6 +65,9 @@ install: ${LITCLOCK_SCRIPT} ${LITCLOCK_MAN} ${QUOTES}
 	install -m 644 ${QUOTES} ${PREFIX_DATA}/litclock
 
 clean:
-	@rm -f ${JSON_DATA}
+	@rm -rf ${VIDEO_DIR}/* ${JSON_DIR}/*
 
-.PHONY: build build_json build_video check check-data check-man check-pep8 install www clean
+.PHONY: build build_json build_json_ru build_json_en
+.PHONY: build_video build_video_ru build_video_en
+.PHONY: check check-data check_data_ru check_data_en check-man check-pep8
+.PHONY: install www clean
