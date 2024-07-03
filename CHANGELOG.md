@@ -9,6 +9,7 @@ change log follows the conventions of
 ### Added
 
 - Option for generating video files.
+- Option for setting a language in a build script.
 
 ### Fixed
 

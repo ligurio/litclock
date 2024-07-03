@@ -11,22 +11,27 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 import cv2
 
-DEFAULT_QUOTE_RU = {
-    "quote_first": "Счастливые часов не наблюдают.",
-    "quote_time_case": "",
-    "quote_last": "",
-    "title": "Горе от ума",
-    "author": "А. Грибоедов",
-    "sfw": "yes"
-}
-
-DEFAULT_QUOTE_EN = {
-    "quote_first": "Who knows, in happiness, how time is flying?",
-    "quote_time_case": "",
-    "quote_last": "",
-    "title": "Woe From Wit",
-    "author": "Alexander Griboyedov",
-    "sfw": "yes"
+DEFAULT_QUOTE = {
+    "ru":  [
+        {
+            "quote_first": "Счастливые часов не наблюдают.",
+            "quote_time_case": "",
+            "quote_last": "",
+            "title": "Горе от ума",
+            "author": "А. Грибоедов",
+            "sfw": "yes"
+        }
+    ],
+    "en": [
+        {
+            "quote_first": "Who knows, in happiness, how time is flying?",
+            "quote_time_case": "",
+            "quote_last": "",
+            "title": "Woe From Wit",
+            "author": "Alexander Griboyedov",
+            "sfw": "yes"
+        }
+    ]
 }
 
 
@@ -95,13 +100,19 @@ def generate_image(txt_quote, txt_title, txt_author, image_name):
     img.save(image_name)
 
 
-def complement_placeholders(times):
+def random_default_quote(lang):
+    quotes_list = DEFAULT_QUOTE.get(lang)
+    return random.choice(quotes_list)
+
+
+def complement_placeholders(times, lang):
     times_with_placeholders = times.copy()
     for hours, minutes in iter_daytime():
         time_str = "{}:{}".format(hours, minutes)
         quotes_list = times_with_placeholders.get(time_str)
         if not quotes_list:
-            placeholder = DEFAULT_QUOTE_RU.copy()
+            default_quote = random_default_quote(lang)
+            placeholder = default_quote.copy()
             placeholder["time"] = time_str
             placeholder["quote_first"] = "{}: {}".format(
                 time_str, placeholder["quote_first"])
@@ -183,8 +194,11 @@ def build_dict(quote_filename, verbose=False):
 def parse_args():
     parser = argparse.ArgumentParser(prog="build_data")
     parser.add_argument("--filename",
-                        type=str,
-                        required=True)
+                        type=str)
+    parser.add_argument("-l", "--language",
+                        choices=["ru", "en"],
+                        required=True,
+                        type=str)
     parser.add_argument("-p", "--path",
                         type=str)
     parser.add_argument("-d", "--dry-run",
@@ -215,13 +229,24 @@ def build_video(image_dir, video_name):
 
     cv2.destroyAllWindows()
     video.release()
-    print("File {}.".format(result_file))
+    print("File {}".format(result_file))
 
 
 def main():
     inputs = parse_args()
-    times = build_dict(inputs.filename, inputs.verbose)
-    times_with_placeholders = complement_placeholders(times)
+    filename = inputs.filename
+    if not filename and inputs.language:
+        filename = "quotes/quotes_{}.csv".format(inputs.language)
+
+    if not os.path.isfile(filename):
+        print("File {} is not found".format(filename))
+        sys.exit(1)
+
+    if not inputs.dry_run and not os.path.isdir(inputs.path):
+        os.makedirs(inputs.path)
+
+    times = build_dict(filename, inputs.verbose)
+    times_with_placeholders = complement_placeholders(times, inputs.language)
     # Write JSON files.
     if not inputs.dry_run and inputs.create_json:
         write_files(times_with_placeholders, inputs.path)
@@ -232,7 +257,7 @@ def main():
         build_video(inputs.path, "litclock.avi")
 
     perc_covered = round(len(times)/(60 * 24) * 100)
-    print("File with quotes: {}".format(inputs.filename))
+    print("File with quotes: {}".format(filename))
     msg_fmt = "Number of quotes with unique time: {} ({}%)"
     print(msg_fmt.format(len(times), perc_covered))
 
