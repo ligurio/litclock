@@ -7,8 +7,8 @@ import os
 import random
 import sys
 
-from PIL import Image, ImageDraw, ImageFont
 import textwrap
+from PIL import Image, ImageDraw, ImageFont
 import cv2
 
 DEFAULT_QUOTE_RU = {
