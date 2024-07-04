@@ -23,7 +23,7 @@ lang="${DEFAULT_LANG}"
 ctime=""
 
 usage() {
-	echo "Usage: $0 [-p <path>] [-t <time>] [-l ru|en] [-v]" 1>&2; exit 1;
+    echo "Usage: $0 [-p <path>] [-t <time>] [-l ru|en] [-v]" 1>&2; exit 1;
 }
 
 while getopts ":p:t:l:v" o; do
@@ -40,12 +40,12 @@ shift $((OPTIND-1))
 quotes_file="${PREFIX_DATA}/litclock/quotes_${lang}.csv"
 
 if ! [ -f "$quotes_file" ]; then
-	echo "File $quotes_file is not found."
-	exit 1
+    echo "File $quotes_file is not found."
+    exit 1
 fi
 
 if [ -z "${ctime}" ]; then
-	ctime=$(date +"%H:%M")
+    ctime=$(date +"%H:%M")
 fi
 
 no_quote=1
@@ -55,24 +55,24 @@ IFS='|'
 exec < "$quotes_file"
 while read -r line
 do
-	read -r time time_words quote title author sfw <<< "$line"
-	if [ "$ctime" != "$time" ]; then
-		continue
-	fi
-	no_quote=0
-	quote_last=${quote#*"$time_words"}
-	quote_first=${quote%%"$time_words"*}
+    read -r time time_words quote title author sfw <<< "$line"
+    if [ "$ctime" != "$time" ]; then
+        continue
+    fi
+    no_quote=0
+    quote_last=${quote#*"$time_words"}
+    quote_first=${quote%%"$time_words"*}
 
-	printf "\""
-	printf "%s" "$quote_first"
-	printf "%b" "$DEFAULT_COLOR"
-	printf "%s" "$time_words"
-	printf "%b" "$DISABLE_COLOR"
-	printf "%s" "$quote_last"
-	printf "\"\n"
-	printf " -- '%s', %s\n\n" "$title" "$author"
+    printf "\""
+    printf "%s" "$quote_first"
+    printf "%b" "$DEFAULT_COLOR"
+    printf "%s" "$time_words"
+    printf "%b" "$DISABLE_COLOR"
+    printf "%s" "$quote_last"
+    printf "\"\n"
+    printf " -- '%s', %s\n\n" "$title" "$author"
 
-	break
+    break
 done
 
 if [ $no_quote -eq 1 ]; then
