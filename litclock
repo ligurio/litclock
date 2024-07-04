@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 #
-# litclock 0.1.0
-# Copyright (c) 2022, Sergey Bronnikov
+# litclock 0.2.0
+# Copyright (c) 2022-2024, Sergey Bronnikov
 # https://github.com/ligurio/litclock
 #
 # litclock script is released under the BSD 2-Clause license.
@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 #
 
-set -eu
+set -e
 
 PREFIX_DATA="/usr/local/share"
 
@@ -39,6 +39,21 @@ shift $((OPTIND-1))
 
 quotes_file="${PREFIX_DATA}/litclock/quotes_${lang}.csv"
 
+printf_color() {
+    local no_color_support="$NO_COLOR"
+    local fmt="$1"
+    local text="$2"
+    if [ -z "${no_color_support}" ]; then
+        printf "%b" "$DEFAULT_COLOR"
+        # shellcheck disable=SC2059
+        # shellcheck disable=SC2086
+        printf $fmt "$text"
+        printf "%b" "$DISABLE_COLOR"
+    else
+        printf "%s" "$time_words"
+    fi
+}
+
 if ! [ -f "$quotes_file" ]; then
     echo "File $quotes_file is not found."
     exit 1
@@ -65,9 +80,7 @@ do
 
     printf "\""
     printf "%s" "$quote_first"
-    printf "%b" "$DEFAULT_COLOR"
-    printf "%s" "$time_words"
-    printf "%b" "$DISABLE_COLOR"
+    printf_color "%s" "$time_words"
     printf "%s" "$quote_last"
     printf "\"\n"
     printf " -- '%s', %s\n\n" "$title" "$author"

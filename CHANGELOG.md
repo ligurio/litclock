@@ -8,6 +8,7 @@ change log follows the conventions of
 
 ### Added
 
+- Support `NO_COLOR` in `litclock`.
 - Option for generating video files.
 - Option for setting a language in a build script.
 
