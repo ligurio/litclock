@@ -55,7 +55,7 @@ IFS='|'
 exec < "$quotes_file"
 while read -r line
 do
-    read -r time time_words quote title author sfw <<< "$line"
+    read -r time time_words quote title author _ <<< "$line"
     if [ "$ctime" != "$time" ]; then
         continue
     fi
