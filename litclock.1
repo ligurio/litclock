@@ -1,5 +1,5 @@
 .\"
-.\" Copyright (c) 2022-2023, Sergey Bronnikov
+.\" Copyright (c) 2022-2024, Sergey Bronnikov
 .\" All rights reserved.
 .\"
 .\" Redistribution and use in source and binary forms, with or without
@@ -52,6 +52,10 @@ Specify a language.
 Possible values are "ru" and "en".
 Default language is "ru".
 .El
+.Pp
+By default litclock highlights a part of quote with time by red color.
+With non-empty NO_COLOR
+environment variable litclock will disable colored text output.
 .Sh EXAMPLES
 Display a quote for a current time:
 .Pp
