@@ -5,7 +5,7 @@ Clock using time quotes from a literature.
 ## Supported languages
 
 - English, completeness - 99%, (1419 out of 1440 quotes).
-- Russian, completeness - 34%, (495 out of 1440 quotes).
+- Russian, completeness - 55%, (798 out of 1440 quotes).
 
 ## Usage
 
