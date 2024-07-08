@@ -69,8 +69,8 @@ DEFAULT_QUOTE = {
 
 def complement_number(num):
     if num < 10:
-        return "0{}".format(num)
-    return "{}".format(num)
+        return f"0{num}"
+    return str(num)
 
 
 def iter_daytime():
@@ -85,7 +85,7 @@ def split_string(quote, quote_time_case):
     quote_time_case_lc = quote_time_case.lower()
     start_pos = quote_lc.find(quote_time_case_lc)
     if start_pos == -1:
-        print("substr '{}' is not found".format(quote_time_case))
+        print(f"substr '{quote_time_case}' is not found")
         sys.exit(1)
     end_pos = start_pos + len(quote_time_case)
     quote_first = quote[0:start_pos]
@@ -127,7 +127,7 @@ def generate_image(txt_quote, txt_title, txt_author, image_name):
     for line in textwrap.wrap(txt_quote, width=50):
         imgDraw.text((start_w, start_h), line, font=font, fill=text_color)
         start_h = start_h + interligne
-    txt = "—  '{}', {}".format(txt_title, txt_author)
+    txt = f"—  '{txt_title}', {txt_author}"
     imgDraw.text((start_w, start_h + 10), txt, font=font, fill=text_color)
     img.save(image_name)
 
@@ -140,14 +140,14 @@ def random_default_quote(lang):
 def complement_placeholders(times, lang):
     times_with_placeholders = times.copy()
     for hours, minutes in iter_daytime():
-        time_str = "{}:{}".format(hours, minutes)
+        time_str = f"{hours}:{minutes}"
         quotes_list = times_with_placeholders.get(time_str)
         if not quotes_list:
             default_quote = random_default_quote(lang)
             placeholder = default_quote.copy()
             placeholder["time"] = time_str
-            placeholder["quote_first"] = "{}: {}".format(
-                time_str, placeholder["quote_first"])
+            quote_first = placeholder["quote_first"]
+            placeholder["quote_first"] = f"{time_str}: {quote_first}"
             times_with_placeholders[time_str] = [placeholder]
 
     return times_with_placeholders
@@ -158,12 +158,12 @@ def write_files(quotes_dict, path, image=False):
         json_obj = json.dumps(quotes_list, indent=4)
         time_wo_colon = time_str.replace(":", "_", 1)
         if not image:
-            file_name = os.path.join(path, "{}.json".format(time_wo_colon))
+            file_name = os.path.join(path, f"{time_wo_colon}.json")
             json_obj = json.dumps(quotes_list, indent=4)
             with open(file_name, "w") as outfile:
                 outfile.write(json_obj)
         else:
-            file_name = os.path.join(path, "{}.png".format(time_wo_colon))
+            file_name = os.path.join(path, f"{time_wo_colon}.png")
             quote = random.choice(quotes_list)
             quote_str = quote["quote_first"] + \
                 quote["quote_time_case"] + \
@@ -261,17 +261,17 @@ def build_video(image_dir, video_name):
 
     cv2.destroyAllWindows()
     video.release()
-    print("File {}".format(result_file))
+    print(f"File {result_file}")
 
 
 def main():
     inputs = parse_args()
     filename = inputs.filename
     if not filename and inputs.language:
-        filename = "quotes/quotes_{}.csv".format(inputs.language)
+        filename = f"quotes/quotes_{inputs.language}.csv"
 
     if not os.path.isfile(filename):
-        print("File {} is not found".format(filename))
+        print(f"File {filename} is not found")
         sys.exit(1)
 
     if not inputs.dry_run and not os.path.isdir(inputs.path):
@@ -289,9 +289,8 @@ def main():
         build_video(inputs.path, "litclock.avi")
 
     perc_covered = round(len(times)/(60 * 24) * 100)
-    print("File with quotes: {}".format(filename))
-    msg_fmt = "Number of quotes with unique time: {} ({}%)"
-    print(msg_fmt.format(len(times), perc_covered))
+    print(f"File with quotes: {filename}")
+    print(f"Number of quotes with unique time: {len(times)} ({perc_covered}%)")
 
 
 if __name__ == '__main__':
