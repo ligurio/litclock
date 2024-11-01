@@ -1,6 +1,6 @@
 # literature clock
 
-Clock using time quotes from a literature.
+is a clock using time quotes from the literature.
 
 ## Supported languages
 
@@ -10,9 +10,9 @@ Clock using time quotes from a literature.
 
 ## Usage
 
-### Console
+### Command-line console
 
-There is a shell script `litclock` that shows a quote for a current time:
+The shell script `litclock` shows a quote for a current time:
 
 > $ date
 >
