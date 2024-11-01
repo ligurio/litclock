@@ -4,7 +4,19 @@ All notable changes to this project will be documented in this file. This
 change log follows the conventions of
 [keepachangelog.com](https://keepachangelog.com/).
 
-[Unreleased]: https://github.com/ligurio/litclock/compare/0.1.1...HEAD
+## Unreleased
+
+[Unreleased]: https://github.com/ligurio/litclock/compare/0.1.2...HEAD
+
+### Added
+
+### Fixed
+
+### Changed
+
+## [0.1.2]
+
+[0.1.2]: https://github.com/ligurio/litclock/compare/0.1.1...0.1.2
 
 ### Added
 
@@ -13,9 +25,10 @@ change log follows the conventions of
 - Option for setting a language in a build script.
 - Portuguese quotes.
 
-### Fixed
-
 ### Changed
+
+- English quotes, completeness - 99%, (1419 out of 1440 quotes).
+- Russian quotes, completeness - 56%, (804 out of 1440 quotes).
 
 ## [0.1.1]
 
