@@ -6,7 +6,7 @@ is a clock using time quotes from the literature.
 
 - English, completeness - 99%, (1432 out of 1440 quotes).
 - Portuguese, completeness - 0%, (1 out of 1440 quotes).
-- Russian, completeness - 56%, (804 out of 1440 quotes).
+- Russian, completeness - 58%, (831 out of 1440 quotes).
 
 ## Usage
 
