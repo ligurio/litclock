@@ -1,7 +1,6 @@
 #!/usr/bin/bash
 
 #
-# litclock 0.2.0
 # Copyright (c) 2022-2025, Sergey Bronnikov
 # https://github.com/ligurio/litclock
 #
@@ -18,6 +17,7 @@ PREFIX_DATA="/usr/local/share"
 DEFAULT_LANG="ru"
 DEFAULT_COLOR="\033[0;31m"
 DISABLE_COLOR="\033[00m"
+VERSION="0.2.0"
 
 lang="${DEFAULT_LANG}"
 ctime=""
@@ -31,7 +31,7 @@ while getopts ":p:t:l:v" o; do
         p) quotes_file=${OPTARG} ;;
         t) ctime=${OPTARG} ;;
         l) lang=${OPTARG} ;;
-        v) printf "litclock 0.1.0\n" && exit 0 ;;
+        v) printf "litclock %s\n" ${VERSION} && exit 0 ;;
         *) usage ;;
     esac
 done
