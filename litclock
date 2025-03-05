@@ -23,7 +23,7 @@ lang="${DEFAULT_LANG}"
 ctime=""
 
 usage() {
-    echo "Usage: $0 [-p <path>] [-t <time>] [-l ru|en] [-v]" 1>&2; exit 1;
+    echo "Usage: $0 [-p <path>] [-t <time>] [-l pt|ru|en] [-v]" 1>&2; exit 1;
 }
 
 while getopts ":p:t:l:v" o; do

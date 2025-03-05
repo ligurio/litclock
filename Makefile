@@ -12,9 +12,10 @@ TARGET_DIR ?= static
 JSON_DIR = $(TARGET_DIR)/times
 VIDEO_DIR = $(TARGET_DIR)/video
 
+QUOTES_PT = $(PROJECT_DIR)/quotes/quotes_pt.csv
 QUOTES_RU = $(PROJECT_DIR)/quotes/quotes_ru.csv
 QUOTES_EN = $(PROJECT_DIR)/quotes/quotes_en.csv
-QUOTES = ${QUOTES_RU} ${QUOTES_EN}
+QUOTES = ${QUOTES_RU} ${QUOTES_EN} ${QUOTES_PT}
 
 LITCLOCK_SCRIPT = litclock
 LITCLOCK_MAN = litclock.1

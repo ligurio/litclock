@@ -10,6 +10,8 @@ change log follows the conventions of
 
 ### Added
 
+- Support Portuguese language in the `litclock` script.
+
 ### Fixed
 
 ### Changed
